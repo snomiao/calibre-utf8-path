@@ -152,6 +152,7 @@ REM 完成
 
 ## 参考文献：
 
+- [Calibre管理电子书怎样和原来的命名规则相结合？ - 知乎]( https://www.zhihu.com/question/19835536 )
 - [Calibre教程之如何解决中文目录名的问题 - 知乎]( https://zhuanlan.zhihu.com/p/245553023 )
 - [Python:替换或去除不能用于文件名的字符 - Penguin]( https://www.polarxiong.com/archives/Python-%E6%9B%BF%E6%8D%A2%E6%88%96%E5%8E%BB%E9%99%A4%E4%B8%8D%E8%83%BD%E7%94%A8%E4%BA%8E%E6%96%87%E4%BB%B6%E5%90%8D%E7%9A%84%E5%AD%97%E7%AC%A6.html )
 - [Calibre保存中文路径和文件名的方法_delubee_新浪博客]( http://blog.sina.com.cn/s/blog_7a1f539c0102xitp.html )
