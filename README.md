@@ -1,4 +1,4 @@
-# 2020-09-24-Calibre-5.0.1-utf8-魔改中文路径教程与懒人包
+# 2020-09-24-Calibre-5.x.x-utf8-魔改中文路径教程与懒人包
 
 本项目地址：[snomiao/calibre-utf8-path]( https://github.com/snomiao/calibre-utf8-path )
 
@@ -8,12 +8,34 @@
 > 
 > -- 引用自 [Calibre保存中文路径和文件名的方法_delubee_新浪博客]( http://blog.sina.com.cn/s/blog_7a1f539c0102xitp.html )
 
-## 太长不看 - Calibre 5.0.1 以上 pylib.zip 直接替换懒人包
+## 太长不看 - 如何将我的书库切换至中文目录
 
-对于 Calibre 5.0.1 以上的用户可以直接下载雪星修改打包好的 （点击传送下载对应版本：）[Releases - pylib.zip]( https://github.com/snomiao/calibre-utf8-path/releases )
+**警告：本补丁未经全面测试，作以下操作前替换前请先备份你的书库！**
+
+### 第一步，Calibre 5.x.x 以上 pylib.zip 直接替换懒人包
+
+对于 Calibre 5.x.x 以上的用户可以直接下载雪星修改打包好的 （点击传送下载对应版本：）[Releases - pylib.zip]( https://github.com/snomiao/calibre-utf8-path/releases )
 
 然后替换掉 `C:\Program Files\Calibre2\app\pylib.zip` 即可。
 或者替换掉 `C:\Program Files (x86)\Calibre2\app\pylib.zip` 即可。
+
+然后重启 Calibre。
+
+### 第二步，将书库里的批量重命名
+
+**再确认一遍你备份过你的书库，以下操作不可逆且有损坏书库的风险。**
+
+打开书库 按 Ctrl + A 选择你的所有书，点 Edit Metadata （或编辑元数据），切到第2个标签页批量替换。字段点title，查找内容和替换内容都填1234，最后点 Apply （应用）
+
+然后目录和文件名就全变成中文，接下来就可以试试用 Listary 或 Everything 搜索你的书库。
+
+### 注意事项
+
+1. 记得备份
+2. 确认你的文件系统支持 utf8 文件名
+3. 目前仅在 Calibre 的 Win32位 及 Win64位 版本试过，mac 和 linux 未测试，欢迎 pr。
+4. 此操作不影响书库本身的兼容性，如果想切换回拼音命名的话，重装 Calibre 再批量重命名一遍即可。
+5. 遇到问题请在 issue 反馈
 
 ## 准备环境
 
@@ -69,7 +91,7 @@ def safe_filename(filename):
 ### 使用 Python 3 编译修改后的 Calibre 源码，并替换进 pylib.zip 里
 
 ```batch
-cd calibre-5.0.1
+cd calibre-*
 python -O -m py_compile src\calibre\db\backend.py
 ```
 
@@ -100,31 +122,36 @@ wsl axel -n 8 -o src.tar.xz https://calibre-ebook.com/dist/src
 wsl tar -xvf src.tar.xz
 del src.tar.xz
 
+
 REM 进入目录；自动修改源码（有node用node，没node用py
 REM move calibre-* calibre-src
 cd calibre-*
-node ../modify_backend.js || python ../modify_backend.py
+python ../modify_backend.py
 
 REM 使用 python3.8 编译并把结果转到 pylib 对应目录
-python -O -m py_compile src\calibre\db\backend_new.py
-move /Y src\calibre\db\__pycache__\backend_new.cpython-38.opt-1.pyc src\calibre\db\backend.pyc
-robocopy src\calibre\db\ pylib_patch\src\calibre\db\ backend.pyc
+python -O -m py_compile src\calibre\db\backend_utf8.py
+move /Y src\calibre\db\__pycache__\backend_utf8.cpython-38.opt-1.pyc src\calibre\db\backend.pyc
+robocopy src\calibre\db\ pylib_patch\calibre\db\ backend.pyc
 
 REM 注：以下指令需要管理员权限运行
 
 REM 先备份，然后拷贝pylib.zip，编译好的文件替换进去，再替换回去
 copy /-Y "C:\Program Files\Calibre2\app\pylib.zip" .\pylib.backup.zip
-robocopy "C:\Program Files\Calibre2\app" .\ pylib.zip
+robocopy "C:\Program Files\Calibre2\app" .\pylib_patch\ pylib.zip
 
 REM 把编译好的东西压进包里
+cd pylib_patch
 wsl chmod 777 pylib.zip
-wsl zip -ur pylib.zip pylib_patch/
+wsl zip -ur pylib.zip calibre/
 
 REM 替换回去
 robocopy .\ "C:\Program Files\Calibre2\app" pylib.zip
+
+REM 完成
 ```
 
 ## 参考文献：
 
 - [Calibre教程之如何解决中文目录名的问题 - 知乎]( https://zhuanlan.zhihu.com/p/245553023 )
 - [Python:替换或去除不能用于文件名的字符 - Penguin]( https://www.polarxiong.com/archives/Python-%E6%9B%BF%E6%8D%A2%E6%88%96%E5%8E%BB%E9%99%A4%E4%B8%8D%E8%83%BD%E7%94%A8%E4%BA%8E%E6%96%87%E4%BB%B6%E5%90%8D%E7%9A%84%E5%AD%97%E7%AC%A6.html )
+- [Calibre保存中文路径和文件名的方法_delubee_新浪博客]( http://blog.sina.com.cn/s/blog_7a1f539c0102xitp.html )

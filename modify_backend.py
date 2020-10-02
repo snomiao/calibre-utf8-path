@@ -22,7 +22,7 @@ def main():
         return("WARNING: REPLACE TITLE FILENAME FAILS")
     f.close()
 
-    f = open('src/calibre/db/backend_new.py', 'w', encoding="utf-8")
+    f = open('src/calibre/db/backend_utf8.py', 'w', encoding="utf-8")
     f.write(target)
     return 'done'
 
