@@ -1,14 +1,12 @@
 # 2020-09-24-Calibre-5.x.x-utf8-魔改中文路径教程与懒人包
 
-本项目地址：[snomiao/calibre-utf8-path]( https://github.com/snomiao/calibre-utf8-path )
-
-背景：
-
 > calibre，一站式的电子书籍管理软件，提供元信息整理、格式转换、等等，刚发现的是很是高兴，给电子书籍管理带来了方便。但是一个致命的原因——导入的中文电子书籍无法保存为中文路径和中文名，我用Everythin搜索的时候很不方便
 > 
 > -- 引用自 [Calibre保存中文路径和文件名的方法_delubee_新浪博客]( http://blog.sina.com.cn/s/blog_7a1f539c0102xitp.html )
 
-## 太长不看 - 如何将我的书库切换至中文目录
+本项目地址：[snomiao/calibre-utf8-path]( https://github.com/snomiao/calibre-utf8-path )
+
+## 上手教程 - 如何将我的书库从拼音目录切换至中文命名
 
 **警告：本补丁未经全面测试，作以下操作前替换前请先备份你的书库！**
 
@@ -35,16 +33,15 @@
 2. 确认你的文件系统支持 utf8 文件名
 3. 目前仅在 Calibre 的 Win32位 及 Win64位 版本试过，mac 和 linux 未测试，欢迎 pr。
 4. 此操作不影响书库本身的兼容性，如果想切换回拼音命名的话，重装 Calibre 再批量重命名一遍即可。
-5. 遇到问题请在 issue 反馈
+5. 遇到问题请在 issue 反馈。
 
-## 准备环境
+## 自行编译 - 了解如何让 Calibre 使用中文目录名
+
+### 准备环境
 
 1. 安装最新版 Calibre，点击进入下载页面：[calibre - Download for Windows]( https://calibre-ebook.com/download_windows )
     或直接下载 [calibre-latest.msi]( https://calibre-ebook.com/dist/win32 ) 
 2. 下载最新源码包 [calibre-latest.tar.xz]( https://calibre-ebook.com/dist/src )
-
-
-## 解决 Calibre 中文目录名问题
 
 ### 修改源码
 
@@ -109,21 +106,26 @@ c:\Python27\python.exe -O -m py_compile src\calibre\db\backend.py
 
 ## 基于以上原理实现的自动化工作流
 
+准备环境：wsl 和 Python 3.8 然后打开命令行窗口一行行执行以下代码
+
 ```bat
+REM 下载本项目
+git clone https://github.com/snomiao/calibre-utf8-path
+cd calibre-utf8-path
+
 REM 安装基本工具（用于下载和修改压缩包）
 wsl sudo apt install axel zip
 
-REM 下载安装包并安装
+REM 下载calibre最新64位安装包并安装（己装可跳过）
 wsl axel -n 8 -o calibre64.msi https://calibrkke-ebook.com/dist/win64
 ./calibre64.msi
 
-REM 下载源码并解压
+REM 下载calibre最新源码并解压
 wsl axel -n 8 -o src.tar.xz https://calibre-ebook.com/dist/src
 wsl tar -xvf src.tar.xz
 del src.tar.xz
 
-
-REM 进入目录；自动修改源码（有node用node，没node用py
+REM 进入目录；自动修改源码
 REM move calibre-* calibre-src
 cd calibre-*
 python ../modify_backend.py
