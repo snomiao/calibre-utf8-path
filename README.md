@@ -8,10 +8,12 @@
 > 
 > -- 引用自 [Calibre保存中文路径和文件名的方法_delubee_新浪博客]( http://blog.sina.com.cn/s/blog_7a1f539c0102xitp.html )
 
-## 太长不看 - Calibre 5.0.1 pylib.zip 直接替换懒人包
+## 太长不看 - Calibre 5.0.1 以上 pylib.zip 直接替换懒人包
 
-对于 Calibre 5.0.1 用户可以直接下载雪星修改打包好的 （点击传送下载：）[pylib.zip]( ./pylib-5.0.1/pylib.zip )
-然后替换掉 `C:\Program Files (x86)\Calibre2\app\pylib.zip` 即可。
+对于 Calibre 5.0.1 以上的用户可以直接下载雪星修改打包好的 （点击传送下载对应版本：）[Releases - pylib.zip]( https://github.com/snomiao/calibre-utf8-path/releases )
+
+然后替换掉 `C:\Program Files\Calibre2\app\pylib.zip` 即可。
+或者替换掉 `C:\Program Files (x86)\Calibre2\app\pylib.zip` 即可。
 
 ## 准备环境
 
@@ -81,7 +83,46 @@ c:\Python27\python.exe -O -m py_compile src\calibre\db\backend.py
 </details>
 
 把 `src\calibre\db\__pycache__\backend.cpython-38.opt-1.pyc`
-重命名为 `backend.pyc` 然后在 `C:\Program Files (x86)\Calibre2\app\pylib.zip` 里找到对应文件并替换进去
+重命名为 `backend.pyc` 然后在 `C:\Program Files\Calibre2\app\pylib.zip` 里找到对应文件并替换进去
+
+## 基于以上原理实现的自动化工作流
+
+```bat
+REM 安装基本工具（用于下载和修改压缩包）
+wsl sudo apt install axel zip
+
+REM 下载安装包并安装
+wsl axel -n 8 -o calibre64.msi https://calibrkke-ebook.com/dist/win64
+./calibre64.msi
+
+REM 下载源码并解压
+wsl axel -n 8 -o src.tar.xz https://calibre-ebook.com/dist/src
+wsl tar -xvf src.tar.xz
+del src.tar.xz
+
+REM 进入目录；自动修改源码（有node用node，没node用py
+REM move calibre-* calibre-src
+cd calibre-*
+node ../modify_backend.js || python ../modify_backend.py
+
+REM 使用 python3.8 编译并把结果转到 pylib 对应目录
+python -O -m py_compile src\calibre\db\backend_new.py
+move /Y src\calibre\db\__pycache__\backend_new.cpython-38.opt-1.pyc src\calibre\db\backend.pyc
+robocopy src\calibre\db\ pylib_patch\src\calibre\db\ backend.pyc
+
+REM 注：以下指令需要管理员权限运行
+
+REM 先备份，然后拷贝pylib.zip，编译好的文件替换进去，再替换回去
+copy /-Y "C:\Program Files\Calibre2\app\pylib.zip" .\pylib.backup.zip
+robocopy "C:\Program Files\Calibre2\app" .\ pylib.zip
+
+REM 把编译好的东西压进包里
+wsl chmod 777 pylib.zip
+wsl zip -ur pylib.zip pylib_patch/
+
+REM 替换回去
+robocopy .\ "C:\Program Files\Calibre2\app" pylib.zip
+```
 
 ## 参考文献：
 
