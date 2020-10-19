@@ -1,3 +1,5 @@
 /calibre-*
 /calibre-*.msi
-wget-log
+*.msi
+*.zip
+pylib_patch

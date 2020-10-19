@@ -1,4 +1,4 @@
-# 2020-09-24-Calibre-5.x.x-utf8-魔改中文路径教程与懒人包
+# 2020-09-24-Calibre-5.1.0-utf8-魔改中文路径教程与懒人包
 
 > calibre，一站式的电子书籍管理软件，提供元信息整理、格式转换、等等，刚发现的是很是高兴，给电子书籍管理带来了方便。但是一个致命的原因——导入的中文电子书籍无法保存为中文路径和中文名，我用Everythin搜索的时候很不方便
 > 
@@ -10,9 +10,11 @@
 
 **警告：本补丁未经全面测试，作以下操作前替换前请先备份你的书库！**
 
-### 第一步，Calibre 5.x.x 以上 pylib.zip 直接替换懒人包
+**注意：Calibre 5.2.0 以上安装后没有 pylib.zip 故[以下方法无用]( https://github.com/snomiao/calibre-utf8-path/issues/1 )，如果你有办法，请提 issue...**
 
-对于 Calibre 5.x.x 以上的用户可以直接下载雪星修改打包好的 （点击传送下载对应版本：）[Releases - pylib.zip]( https://github.com/snomiao/calibre-utf8-path/releases )
+### 第一步，Calibre 5.1.0 pylib.zip 直接替换懒人包
+
+对于 Calibre 5.1.0 的用户可以直接下载雪星修改打包好的 （点击传送下载对应版本：）[Releases - pylib.zip]( https://github.com/snomiao/calibre-utf8-path/releases )
 
 然后替换掉 `C:\Program Files\Calibre2\app\pylib.zip` 即可。
 或者替换掉 `C:\Program Files (x86)\Calibre2\app\pylib.zip` 即可。
@@ -117,7 +119,7 @@ REM 安装基本工具（用于下载和修改压缩包）
 wsl sudo apt install axel zip
 
 REM 下载calibre最新64位安装包并安装（己装可跳过）
-wsl axel -n 8 -o calibre64.msi https://calibrkke-ebook.com/dist/win64
+wsl axel -n 8 -o calibre64.msi https://calibre-ebook.com/dist/win64
 ./calibre64.msi
 
 REM 下载calibre最新源码并解压
