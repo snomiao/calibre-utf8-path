@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       # 安装基本工具（用于下载和修改压缩包）
-      - run: apt-get install -y zip git python # axel
+      - run: apt-get install -y zip git python #   axel
       # 下载 calibre 最新64位安装包
       # axel -n 8 -o calibre64.msi https://calibre-ebook.com/dist/win64 \
       # axel -n 8 -o src.tar.xz https://calibre-ebook.com/dist/src \
