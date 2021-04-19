@@ -1,0 +1,41 @@
+# 编译参考: [calibre/README.rst at master · kovidgoyal/calibre]( https://github.com/kovidgoyal/calibre/blob/master/bypy/README.rst )
+
+on:
+  push:
+    branches:
+      - gh-build
+name: gh-build
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # 安装基本工具（用于下载和修改压缩包）
+      - run: apt-get install -y zip git python # axel
+      # 下载 calibre 最新64位安装包
+      # axel -n 8 -o calibre64.msi https://calibre-ebook.com/dist/win64 \
+      # axel -n 8 -o src.tar.xz https://calibre-ebook.com/dist/src \
+      # tar -xvf src.tar.xz
+      # 下载最新源码
+      - run: git clone https://github.com/kovidgoyal/bypy.git
+      - run: git clone https://github.com/kovidgoyal/calibre.git
+      - run: cd calibre && ./setup.py bootstrap
+      # 自动修改代码
+      - run: python modify_backend.py
+      # 编译
+      - run: ./setup.py build_dep linux && \
+      - run: ./setup.py build_dep linux 32 && \
+      - run: ./setup.py linux
+      # 打包
+      - name: Archive Release
+        uses: thedoctor0/zip-release@master
+        with:
+          directory: dist
+      # 扔附件
+      - uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: dist.zip
+          asset_name: dist.zip
+          tag: ${{ github.ref }}
+          body: "calibre dist for linux"
