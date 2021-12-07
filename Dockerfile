@@ -1,5 +1,8 @@
 FROM ubuntu:20.04
 
+# ref: 
+# - [calibre/README.rst at master · snomiao/calibre]( https://github.com/snomiao/calibre/blob/master/bypy/README.rst#id3 )
+
 # some...
 RUN apt update
 RUN apt-get install -y git
