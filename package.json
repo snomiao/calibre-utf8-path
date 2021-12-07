@@ -1,0 +1,20 @@
+{
+  "name": "calibre-utf8-path",
+  "version": "1.0.0",
+  "description": "> calibre，一站式的电子书籍管理软件，提供元信息整理、格式转换、等等，刚发现的是很是高兴，给电子书籍管理带来了方便。但是一个致命的原因——导入的中文电子书籍无法保存为中文路径和中文名，我用Everythin搜索的时候很不方便\r > \r > -- 引用自 [Calibre保存中文路径和文件名的方法_delubee_新浪博客]( http://blog.sina.com.cn/s/blog_7a1f539c0102xitp.html )",
+  "main": "index.js",
+  "scripts": {
+    "build": "docker build . -t calibre"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snomiao/calibre-utf8-path.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/snomiao/calibre-utf8-path/issues"
+  },
+  "homepage": "https://github.com/snomiao/calibre-utf8-path#readme"
+}
