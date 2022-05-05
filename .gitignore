@@ -3,3 +3,4 @@
 *.msi
 *.zip
 pylib_patch
+*.log

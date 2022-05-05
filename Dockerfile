@@ -7,7 +7,7 @@ FROM ubuntu:20.04
 RUN apt update
 RUN apt-get install -y git
 # RUN apt install -y git
-
+ 
 # clone project
 # blocked by gfw
 RUN git clone https://github.com/kovidgoyal/bypy.git
