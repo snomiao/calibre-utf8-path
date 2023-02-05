@@ -1,10 +1,13 @@
-# 2022-12-17 最新修改方法見這裏
+# calibre-utf8-path
 
-- [改成bin/python-lib.bypy.frozen了 · Issue #2 · snomiao/calibre-utf8-path]( https://github.com/snomiao/calibre-utf8-path/issues/2 )
+
+- 2022-12-17 最新修改方法見這裏 [改成bin/python-lib.bypy.frozen了 · Issue #2 · snomiao/calibre-utf8-path]( https://github.com/snomiao/calibre-utf8-path/issues/2 )
+- 2023-02-05 相関倉庫 <https://github.com/kurikomoe/calibre-utf8-path/tree/poc>
+
 
 以下是舊方法，現在僅供思路參考。
 
-# 2020-09-24-Calibre-5.1.0-utf8-魔改中文路径教程与懒人包
+## 2020-09-24-Calibre-5.1.0-utf8-魔改中文路径教程与懒人包
 
 > calibre，一站式的电子书籍管理软件，提供元信息整理、格式转换、等等，刚发现的是很是高兴，给电子书籍管理带来了方便。但是一个致命的原因——导入的中文电子书籍无法保存为中文路径和中文名，我用Everythin搜索的时候很不方便
 > 
