@@ -1,5 +1,10 @@
 # calibre-utf8-path
 
+> [!IMPORTANT]
+> 本倉庫的方法只適用於 calibre ≤ 5.1。calibre 5.x 之後改用 bypy 打包，替換 backend.pyc 的方法已失效。
+> 新版 calibre 請使用 [Cirn09/calibre-do-not-translate-my-path](https://github.com/Cirn09/calibre-do-not-translate-my-path)（隨 calibre 新版本自動發佈補丁）。
+> calibre-web 不需要本補丁：在其設定中取消勾選 “Convert non-English characters in title and author while saving to disk” 即可。
+
 
 - 2022-12-17 最新修改方法見這裏 [改成bin/python-lib.bypy.frozen了 · Issue #2 · snomiao/calibre-utf8-path]( https://github.com/snomiao/calibre-utf8-path/issues/2 )
 - 2023-02-05 相関倉庫 <https://github.com/kurikomoe/calibre-utf8-path/tree/poc>
